@@ -1,5 +1,6 @@
 package lab.br.com.helloworld;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -31,12 +32,15 @@ public class HelloWorld extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 Editable text = HelloWorld.this.txtName.getText();
-                String greeting = getResources().getString(R.string.greeting);
-                HelloWorld.this.txtGreeting.setText(greeting + HelloWorld.WHITE_SPACE + text);
+               // String greeting = getResources().getString(R.string.greeting);
+               // HelloWorld.this.txtGreeting.setText(greeting + HelloWorld.WHITE_SPACE + text);
+
+
+                Intent intent = GreetingActivity.buildIntent(text.toString());
+                startActivity(intent);
             }
         });
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

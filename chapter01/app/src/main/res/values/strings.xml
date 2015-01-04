@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <string name="app_name">HelloWorld</string>
     <string name="hello_world">Guia de Pista</string>
     <string name="action_settings">Settings</string>
     <string name="type_your_name">Digite o seu nome:</string>
     <string name="btn_greeting">Saldar</string>
     <string name="greeting">Olá</string>
+    <string name="title_activity_saudacao">SaudacaoActivity</string>
+    <string name="greeting_message">Bem vindo</string>
+
+
 </resources>
