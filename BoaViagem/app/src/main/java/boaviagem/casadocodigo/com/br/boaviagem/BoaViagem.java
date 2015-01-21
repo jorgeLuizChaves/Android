@@ -16,6 +16,9 @@ public class BoaViagem extends ActionBarActivity {
     private EditText login;
     private EditText pwd;
 
+    private static final String USUARIO = "leitor";
+    private static final String SENHA = "123";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,9 +33,9 @@ public class BoaViagem extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 String usuarioInformado = login.getText().toString();
-                String senhaInformada = login.getText().toString();
-                if("leitor".equals(usuarioInformado) &&
-                        "123".equals(senhaInformada)) {
+                String senhaInformada = pwd.getText().toString();
+                if(USUARIO.equals(usuarioInformado) &&
+                        SENHA.equals(senhaInformada)) {
                     // vai para outra activity
                     startActivity(new Intent(BoaViagem.this, DashboardActivity.class));
                 } else{
@@ -45,7 +48,6 @@ public class BoaViagem extends ActionBarActivity {
             }
         });
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

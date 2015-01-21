@@ -7,5 +7,23 @@
     <string name="lbl_login">sign up</string>
     <string name="lbl_pwd">password</string>
     <string name="erro_autenticao">usuário ou senha inválida.</string>
+    <string name="novo_gasto">Novo Gasto</string>
+    <string name="nova_viagem">Nova Viagem</string>
+    <string name="minhas_viagens">Minhas Viagens</string>
+    <string name="configuracoes">Configurações</string>
+    <string name="destino">destino</string>
+    <string name="tipo_viagem">Tipo de Viagem:</string>
+    <string name="lazer">Lazer</string>
+    <string name="negocios">Negócios</string>
+    <string name="data_da_chegada">Data Chegada</string>
+    <string name="data_da_saida">Data Saída</string>
+    <string name="orcamento">Orçamento</string>
+    <string name="nro_pessoas">Nro de pessoas:</string>
+    <string name="title_activity_nova_viagem">NovaViagemActivity</string>
+    <string name="title_activity_gasto">Gasto</string>
+    <string name="viagem">Viagem</string>
+    <string name="valor">Valor</string>
+    <string name="data">Data</string>
+    <string name="selecione">selecione</string>
 
 </resources>

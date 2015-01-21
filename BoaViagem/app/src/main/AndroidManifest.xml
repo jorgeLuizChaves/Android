@@ -10,6 +10,17 @@
         <activity
             android:name=".BoaViagem"
             android:label="@string/app_name" >
+        </activity>
+        <activity android:name=".DashboardActivity" >
+        </activity>
+        <activity
+            android:name=".NovaViagemActivity"
+            android:label="@string/title_activity_nova_viagem" >
+
+        </activity>
+        <activity
+            android:name=".Gasto"
+            android:label="@string/title_activity_gasto" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
