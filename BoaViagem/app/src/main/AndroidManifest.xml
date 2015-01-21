@@ -16,16 +16,24 @@
         <activity
             android:name=".NovaViagemActivity"
             android:label="@string/title_activity_nova_viagem" >
-
         </activity>
         <activity
             android:name=".Gasto"
             android:label="@string/title_activity_gasto" >
+
+        </activity>
+        <activity
+            android:name=".ViagemListActivity"
+            android:label="@string/title_activity_viagem_list" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".GastoListActivity"
+            android:label="@string/title_activity_gasto_list" >
         </activity>
     </application>
 
