@@ -7,8 +7,10 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.Spinner;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -47,6 +49,10 @@ public class Gasto extends Activity {
                 showDialog(v.getId());
             }
         });
+
+        ArrayAdapter<CharSequence> categories = ArrayAdapter.createFromResource(this, R.array.categoria_gasto, android.R.layout.simple_spinner_item);
+        Spinner categoria = (Spinner) findViewById(R.id.categoria);
+        categoria.setAdapter(categories);
     }
 
 
