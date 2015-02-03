@@ -29,6 +29,7 @@ public class ViagemListActivity extends ListActivity  implements AdapterView.OnI
         super.onCreate(savedInstanceState);
         String[] de = {"imagem", "destino", "data", "total"};
         int[] para = {R.id.tipoViagem, R.id.destino, R.id.data, R.id.valor};
+
         SimpleAdapter adapter =
                 new SimpleAdapter(this, listarViagens(),
                         R.layout.lista_viagem, de, para);
