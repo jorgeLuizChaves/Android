@@ -53,13 +53,13 @@ public class ViagemListActivity extends ListActivity  implements AdapterView.OnI
         item.put("imagem", R.drawable.negocios);
         item.put("destino", "São Paulo");
         item.put("data","02/02/2012 a 04/02/2012");
-        item.put("total","Gasto total R$ 314,98");
+        item.put("total","GastoActivity total R$ 314,98");
         viagens.add(item);
         item = new HashMap<String, Object>();
         item.put("imagem", R.drawable.lazer);
         item.put("destino", "Maceió");
         item.put("data","14/05/2012 a 22/05/2012");
-        item.put("total","Gasto total R$ 25834,67");
+        item.put("total","GastoActivity total R$ 25834,67");
         viagens.add(item);
         return viagens;
     }

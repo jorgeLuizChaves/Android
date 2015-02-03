@@ -29,6 +29,8 @@
     <string name="local">Local</string>
     <string name="gastei">Gastei!</string>
     <string name="categoria">Categoria</string>
+    <string name="sair">sair</string>
+    <string name="remover_viagem">Remover Viagem</string>
 
     <string-array name="categoria_gasto">
         <item>Alimentação</item>

@@ -16,7 +16,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 
-public class Gasto extends Activity {
+public class GastoActivity extends Activity {
 
     int dia;
     int mes;

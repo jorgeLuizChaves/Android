@@ -36,7 +36,7 @@ public class GastoListActivity extends ListActivity implements OnItemClickListen
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Map<String, Object> map = listaGastos.get(position);
         String descricao = (String) map.get("descricao");
-        String mensagem = "Gasto selecionada: " + descricao;
+        String mensagem = "GastoActivity selecionada: " + descricao;
         Toast.makeText(this, mensagem,Toast.LENGTH_SHORT).show();
     }
 
