@@ -30,7 +30,7 @@ public class DashboardActivity extends Activity {
         ACTIVITIES = new TreeMap<Integer, Class<? extends Activity>>();
 
         ACTIVITIES.put(R.id.nova_viagem, NovaViagemActivity.class);
-        ACTIVITIES.put(R.id.minhas_viagens, GastoActivity.class);
+        ACTIVITIES.put(R.id.minhas_viagens, ViagemListActivity.class);
         ACTIVITIES.put(R.id.configuracoes, GastoActivity.class);
         ACTIVITIES.put(R.id.novo_gasto, GastoActivity.class);
     }

@@ -53,6 +53,7 @@ public class GastoActivity extends Activity {
         ArrayAdapter<CharSequence> categories = ArrayAdapter.createFromResource(this, R.array.categoria_gasto, android.R.layout.simple_spinner_item);
         Spinner categoria = (Spinner) findViewById(R.id.categoria);
         categoria.setAdapter(categories);
+
     }
 
 

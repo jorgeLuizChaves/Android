@@ -2,6 +2,9 @@ package boaviagem.casadocodigo.com.br.boaviagem;
 
 import android.app.ListActivity;
 import android.os.Bundle;
+import android.view.ContextMenu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -24,6 +27,8 @@ import boaviagem.casadocodigo.com.br.boaviagem.boaviagem.casadocodigo.com.br.boa
 
 public class GastoListActivity extends ListActivity implements OnItemClickListener {
 
+
+    private String dataAnterior = "";
     private List<Map<String, Object>> listaGastos;
 
 
@@ -35,7 +40,7 @@ public class GastoListActivity extends ListActivity implements OnItemClickListen
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Map<String, Object> map = listaGastos.get(position);
-        String descricao = (String) map.get("descricao");
+        String descricao = (String) map.get(DESCRICAO);
         String mensagem = "GastoActivity selecionada: " + descricao;
         Toast.makeText(this, mensagem,Toast.LENGTH_SHORT).show();
     }
@@ -58,6 +63,26 @@ public class GastoListActivity extends ListActivity implements OnItemClickListen
         setTitle(R.string.app_name);
         ListView listView = getListView();
         listView.setOnItemClickListener(this);
+        registerForContextMenu(getListView());
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.gasto_menu, menu);
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        if(item.getItemId() == R.menu.gasto_menu){
+            AdapterView.AdapterContextMenuInfo menuInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+            listaGastos.remove(menuInfo.position);
+            getListView().invalidateViews();
+            dataAnterior = "";
+            return Boolean.TRUE;
+        }
+
+        return super.onContextItemSelected(item);
     }
 
     private List<Gasto> getListaGastos() {
@@ -110,8 +135,6 @@ public class GastoListActivity extends ListActivity implements OnItemClickListen
     }
 
     private class GastoViewBinder implements ViewBinder {
-
-        private String dataAnterior = "";
 
         @Override
         public boolean setViewValue(View view, Object data,
