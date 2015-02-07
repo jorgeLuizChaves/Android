@@ -74,7 +74,7 @@ public class GastoListActivity extends ListActivity implements OnItemClickListen
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
-        if(item.getItemId() == R.menu.gasto_menu){
+        if(item.getItemId() == R.id.remover){
             AdapterView.AdapterContextMenuInfo menuInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
             listaGastos.remove(menuInfo.position);
             getListView().invalidateViews();
