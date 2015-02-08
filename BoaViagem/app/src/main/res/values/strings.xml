@@ -44,6 +44,8 @@
     <string name="informe_valor_limite">valor limite</string>
     <string name="valor_limite_sumario">valor sumário</string>
     <string name="valor_limite">valor limite</string>
+    <string name="registro_salvo">salvo com sucesso</string>
+    <string name="erro_salvar">erro ao salvar</string>
 
     <string-array name="categoria_gasto">
         <item>Alimentação</item>

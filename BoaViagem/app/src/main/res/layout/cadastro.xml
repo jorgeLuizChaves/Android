@@ -55,7 +55,7 @@
             android:id="@+id/orcamento"/>
         <TableRow>
             <TextView android:text="@string/nro_pessoas"/>
-            <EditText />
+            <EditText  android:id="@+id/quantidade_pessoas" />
         </TableRow>
         <Button android:id="@+id/btnNovaViagem"
             android:text="nova viagem"
