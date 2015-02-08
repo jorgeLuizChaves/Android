@@ -80,9 +80,12 @@ public class ViagemListActivity extends ListActivity  implements OnItemClickList
 
     @Override
     public void onClick(DialogInterface dialog, int which) {
+        String id = (String) viagens.get(viagemSelecionada).get("id");
         switch (which) {
             case 0:
-                startActivity(new Intent(this, ViagemListActivity.class));
+                Intent intent = new Intent(this, NovaViagemActivity.class);
+                intent.putExtra(Constantes.VIAGEM_ID, id);
+                startActivity(intent);
                 break;
             case 1:
                 startActivity(new Intent(this, GastoActivity.class));
@@ -95,6 +98,7 @@ public class ViagemListActivity extends ListActivity  implements OnItemClickList
                 break;
             case DialogInterface.BUTTON_POSITIVE:
                 viagens.remove(viagemSelecionada);
+                removerViagem(viagemSelecionada);
                 getListView().invalidateViews();
                 break;
             case DialogInterface.BUTTON_NEGATIVE:
@@ -222,7 +226,14 @@ public class ViagemListActivity extends ListActivity  implements OnItemClickList
         return builder.create();
     }
 
-    @Override
+    private void removerViagem(Integer id) {
+        SQLiteDatabase db = helper.getWritableDatabase();
+        String where[] = new String[]{id.toString()};
+        db.delete("gasto", "viagem_id = ?", where);
+        db.delete("viagem", "_id = ?", where);
+    }
+
+        @Override
     public boolean setViewValue(View view, Object data, String textRepresentation) {
         if (view.getId() == R.id.barraProgresso) {
             Double valores[] = (Double[]) data;

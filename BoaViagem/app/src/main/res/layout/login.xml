@@ -48,4 +48,9 @@
         android:text="@string/lbl_login"
         android:id="@+id/btnLogin"
         android:layout_gravity="center_horizontal" />
+    <CheckBox
+        android:id="@+id/manterConectado"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/manter_conectado" />
 </LinearLayout>

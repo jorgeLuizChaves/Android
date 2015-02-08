@@ -6,5 +6,5 @@ package boaviagem.casadocodigo.com.br.boaviagem.boaviagem.casadocodigo.com.br.bo
 public interface Constantes {
     public static final int VIAGEM_LAZER = 1;
     public static final int VIAGEM_NEGOCIOS = 2;
-
+    public static final String VIAGEM_ID = "id_viagem";
 }

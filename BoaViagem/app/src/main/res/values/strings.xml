@@ -46,6 +46,8 @@
     <string name="valor_limite">valor limite</string>
     <string name="registro_salvo">salvo com sucesso</string>
     <string name="erro_salvar">erro ao salvar</string>
+    <string name="manter_conectado">manter me logado</string>
+    <string name="editado">editado com sucesso.</string>
 
     <string-array name="categoria_gasto">
         <item>Alimentação</item>

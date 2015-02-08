@@ -3,6 +3,7 @@ package boaviagem.casadocodigo.com.br.boaviagem;
 import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -15,10 +16,14 @@ import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 import boaviagem.casadocodigo.com.br.boaviagem.boaviagem.casadocodigo.com.br.boaviagem.db.DatabaseHelper;
+import boaviagem.casadocodigo.com.br.boaviagem.boaviagem.casadocodigo.com.br.boaviagem.db.ViagemDAO;
 import boaviagem.casadocodigo.com.br.boaviagem.boaviagem.casadocodigo.com.br.boaviagem.model.Constantes;
+import boaviagem.casadocodigo.com.br.boaviagem.boaviagem.casadocodigo.com.br.boaviagem.model.Viagem;
 
 
 public class NovaViagemActivity extends Activity {
@@ -28,6 +33,8 @@ public class NovaViagemActivity extends Activity {
     private RadioGroup radioGroup;
     private SQLiteDatabase db;
     private int dia, mes, ano;
+    private String id;
+    private ViagemDAO viagemDAO;
 
     private static final String DD_MM_YYYY = "%d/%d/%d";
 
@@ -35,13 +42,32 @@ public class NovaViagemActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.cadastro);
-
-        Button btnNovaViagem = (Button) findViewById(R.id.btnNovaViagem);
-
         bindFields();
         setData();
-        helper = new DatabaseHelper(this);
+        Button btnNovaViagem = (Button) findViewById(R.id.btnNovaViagem);
         configureListener(btnNovaViagem);
+
+        id = getIntent().getStringExtra(Constantes.VIAGEM_ID);
+        helper = new DatabaseHelper(this);
+        viagemDAO = new ViagemDAO(helper);
+        if(id != null){
+            prepararEdicao();
+        }
+    }
+
+    private void prepararEdicao() {
+        Viagem viagem = viagemDAO.findById(id);
+
+        if(viagem.getTipoViagem() == Constantes.VIAGEM_LAZER){
+            radioGroup.check(R.id.lazer);
+        } else {
+            radioGroup.check(R.id.negocios);
+        }
+        destino.setText(viagem.getDestino());
+        dataChegada.setText(viagem.getDataChegada());
+        dataSaida.setText(viagem.getDataSaida());
+        quantidadePessoas.setText(viagem.getQuantidadePessoas());
+        orcamento.setText(viagem.getOrcamento());
     }
 
     private void setData() {
@@ -116,14 +142,22 @@ public class NovaViagemActivity extends Activity {
 
     public void salvarViagem(View view, ContentValues values) {
         // prepara o ContentValues
-        long resultado = db.insert("viagem", null, values);
-        if (resultado != -1) {
-            Toast.makeText(this, getString(R.string.registro_salvo),
+        long resultado = 0;
+        if(id == null) {
+            resultado = db.insert("viagem", null, values);
+            if (resultado != -1) {
+                Toast.makeText(this, getString(R.string.registro_salvo),
+                        Toast.LENGTH_SHORT).show();
+                this.onBackPressed();
+            } else {
+                Toast.makeText(this, getString(R.string.erro_salvar),
+                        Toast.LENGTH_SHORT).show();
+            }
+        }else{
+            Toast.makeText(this, getString(R.string.editado),
                     Toast.LENGTH_SHORT).show();
+            resultado = db.update("viagem", values, "_id = ?",new String[]{ id });
             this.onBackPressed();
-        } else {
-            Toast.makeText(this, getString(R.string.erro_salvar),
-                    Toast.LENGTH_SHORT).show();
         }
     }
 }
