@@ -120,6 +120,7 @@ public class NovaViagemActivity extends Activity {
         if (resultado != -1) {
             Toast.makeText(this, getString(R.string.registro_salvo),
                     Toast.LENGTH_SHORT).show();
+            this.onBackPressed();
         } else {
             Toast.makeText(this, getString(R.string.erro_salvar),
                     Toast.LENGTH_SHORT).show();
