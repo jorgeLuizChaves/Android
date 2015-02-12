@@ -1,5 +1,6 @@
 package boaviagem.casadocodigo.com.br.boaviagem;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.ActionBarActivity;
@@ -13,7 +14,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 
-public class BoaViagem extends ActionBarActivity {
+public class BoaViagem extends Activity {
 
     private EditText login;
     private EditText pwd;
