@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,6 +30,8 @@ public class TwitterSearch extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        setContentView(R.layout.activity_twitter_search);
+
         tweets = (ListView) findViewById(R.id.lista);
         searchText = (EditText) findViewById(R.id.texto);
         searchTweetsButton = (Button) findViewById(R.id.searchTweetsButton);
@@ -50,6 +53,8 @@ public class TwitterSearch extends Activity {
 
         private ProgressDialog dialog;
 
+        final static String TwitterStreamURL = "https://api.twitter.com/1.1/search/tweets.json?q=";
+
         @Override
         protected void onPreExecute() {
             dialog = new ProgressDialog(TwitterSearch.this);
@@ -63,17 +68,19 @@ public class TwitterSearch extends Activity {
                 if(TextUtils.isEmpty(filtro)){
                     return null;
                 }
-                String urlTwitter = "http://search.twitter.com/search.json?q=";
-                String url = Uri.parse(urlTwitter + filtro).toString();
-                String conteudo = HTTPUtils.acessar(url);
+                //String url = Uri.parse(TwitterStreamURL + filtro).toString();
+
+                String conteudo = new HTTPUtils().getTwitterStream(filtro);
+
                 JSONObject jsonObject = new JSONObject(conteudo);
-                JSONArray resultados = jsonObject.getJSONArray("results");
+                Log.i("", "resultado: " + jsonObject);
+                JSONArray resultados = jsonObject.getJSONArray("statuses");
                 String[] tweets = new String[resultados.length()];
 
                 for (int i = 0; i < resultados.length(); i++) {
                     JSONObject tweet = resultados.getJSONObject(i);
                     String texto = tweet.getString("text");
-                    String usuario = tweet.getString("from_user");
+                    String usuario = tweet.getJSONObject("user").getString("screen_name");
                     tweets[i] = usuario + " - " + texto;
                 }
                 return tweets;

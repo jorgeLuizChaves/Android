@@ -22,6 +22,7 @@
             android:id="@+id/searchTweetsButton"
             android:text="@string/buscar" />
     </LinearLayout>
+
     <ListView
         android:id="@+id/lista"
         android:layout_width="wrap_content"
