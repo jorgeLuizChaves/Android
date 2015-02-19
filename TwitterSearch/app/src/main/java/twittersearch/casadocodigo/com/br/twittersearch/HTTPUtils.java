@@ -29,12 +29,12 @@ import java.util.Scanner;
  */
 public class HTTPUtils {
 
+    private static final String ENCODE_UTF8 = "UTF-8";
     final static String CONSUMER_KEY = "2UHdsGb3LbzI64JS0ASaJqoh6";
     final static String TwitterTokenURL = "https://api.twitter.com/oauth2/token";
     final static String CONSUMER_SECRET = "4NjiJX7hvN5giKmXzZQTTfG4HcOdwqNWlR8Nbtt8WpGxw3De7P";
     final static String TwitterStreamURL = "https://api.twitter.com/1.1/search/tweets.json?q=";
-
-    private static final String ENCODE_UTF8 = "UTF-8";
+    private static final int OK = 200;
 
     private String getResponseBody(HttpRequestBase request) {
         StringBuilder sb = new StringBuilder();
@@ -42,15 +42,16 @@ public class HTTPUtils {
 
             DefaultHttpClient httpClient = new DefaultHttpClient(new BasicHttpParams());
             HttpResponse response = httpClient.execute(request);
+
             int statusCode = response.getStatusLine().getStatusCode();
             String reason = response.getStatusLine().getReasonPhrase();
 
-            if (statusCode == 200) {
+            if (statusCode == OK) {
 
                 HttpEntity entity = response.getEntity();
                 InputStream inputStream = entity.getContent();
 
-                BufferedReader bReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"), 8);
+                BufferedReader bReader = new BufferedReader(new InputStreamReader(inputStream, ENCODE_UTF8), 8);
                 String line = null;
                 while ((line = bReader.readLine()) != null) {
                     sb.append(line);

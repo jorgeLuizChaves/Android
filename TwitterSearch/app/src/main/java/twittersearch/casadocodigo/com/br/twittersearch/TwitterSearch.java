@@ -35,7 +35,8 @@ public class TwitterSearch extends Activity {
         tweets = (ListView) findViewById(R.id.lista);
         searchText = (EditText) findViewById(R.id.texto);
         searchTweetsButton = (Button) findViewById(R.id.searchTweetsButton);
-
+        tweets.setAdapter(new ArrayAdapter<String>(getBaseContext(),
+                android.R.layout.simple_list_item_1, new String[]{}));
         configureListeners();
     }
 
@@ -58,6 +59,7 @@ public class TwitterSearch extends Activity {
         @Override
         protected void onPreExecute() {
             dialog = new ProgressDialog(TwitterSearch.this);
+            dialog.setMessage("Aguarde");
             dialog.show();
         }
 
@@ -68,12 +70,12 @@ public class TwitterSearch extends Activity {
                 if(TextUtils.isEmpty(filtro)){
                     return null;
                 }
-                //String url = Uri.parse(TwitterStreamURL + filtro).toString();
 
                 String conteudo = new HTTPUtils().getTwitterStream(filtro);
 
                 JSONObject jsonObject = new JSONObject(conteudo);
                 Log.i("", "resultado: " + jsonObject);
+
                 JSONArray resultados = jsonObject.getJSONArray("statuses");
                 String[] tweets = new String[resultados.length()];
 
@@ -82,6 +84,7 @@ public class TwitterSearch extends Activity {
                     String texto = tweet.getString("text");
                     String usuario = tweet.getJSONObject("user").getString("screen_name");
                     tweets[i] = usuario + " - " + texto;
+                    Log.e(getPackageName(), tweets[i]);
                 }
                 return tweets;
             } catch (Exception e) {
@@ -93,7 +96,7 @@ public class TwitterSearch extends Activity {
         protected void onPostExecute(String[] result) {
             if(result != null){
                 ArrayAdapter<String> adapter =
-                        new ArrayAdapter<String>(getBaseContext(),
+                        new ArrayAdapter<String>(TwitterSearch.this,
                                 android.R.layout.simple_list_item_1, result);
                 tweets.setAdapter(adapter);
             }
