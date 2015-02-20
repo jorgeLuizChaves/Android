@@ -1,6 +1,7 @@
 package twittersearch.casadocodigo.com.br.twittersearch;
 
 import android.util.Base64;
+import android.util.Log;
 
 import com.google.gson.Gson;
 
@@ -29,12 +30,12 @@ import java.util.Scanner;
  */
 public class HTTPUtils {
 
+    private static final int OK = 200;
     private static final String ENCODE_UTF8 = "UTF-8";
     final static String CONSUMER_KEY = "2UHdsGb3LbzI64JS0ASaJqoh6";
     final static String TwitterTokenURL = "https://api.twitter.com/oauth2/token";
     final static String CONSUMER_SECRET = "4NjiJX7hvN5giKmXzZQTTfG4HcOdwqNWlR8Nbtt8WpGxw3De7P";
     final static String TwitterStreamURL = "https://api.twitter.com/1.1/search/tweets.json?q=";
-    private static final int OK = 200;
 
     private String getResponseBody(HttpRequestBase request) {
         StringBuilder sb = new StringBuilder();
@@ -74,53 +75,43 @@ public class HTTPUtils {
                 Gson gson = new Gson();
                 auth = gson.fromJson(rawAuthorization, Authenticated.class);
             } catch (IllegalStateException ex) {
-                // just eat the exception
+                Log.e("error log", ex.getMessage());
             }
         }
         return auth;
     }
 
-    public String getTwitterStream(String screenName) {
-        String results = null;
-
-        // Step 1: Encode consumer key and secret
+    public Authenticated authenticateApp(){
         try {
-            // URL encode the consumer key and secret
             String urlApiKey = URLEncoder.encode(CONSUMER_KEY, ENCODE_UTF8);
             String urlApiSecret = URLEncoder.encode(CONSUMER_SECRET, ENCODE_UTF8);
-
-            // Concatenate the encoded consumer key, a colon character, and the
-            // encoded consumer secret
-            String combined = urlApiKey + ":" + urlApiSecret;
-
-            // Base64 encode the string
+            String combined = String.format("%s:%s", urlApiKey, urlApiSecret);
             String base64Encoded = Base64.encodeToString(combined.getBytes(), Base64.NO_WRAP);
 
-            // Step 2: Obtain a bearer token
             HttpPost httpPost = new HttpPost(TwitterTokenURL);
             httpPost.setHeader("Authorization", "Basic " + base64Encoded);
             httpPost.setHeader("Content-Type", "application/x-www-form-urlencoded;charset=UTF-8");
             httpPost.setEntity(new StringEntity("grant_type=client_credentials"));
             String rawAuthorization = getResponseBody(httpPost);
             Authenticated auth = jsonToAuthenticated(rawAuthorization);
+            return auth;
+        } catch (UnsupportedEncodingException e) {
+            Log.e("error log","");
+        }
+        return null;
+    }
 
-            // Applications should verify that the value associated with the
-            // token_type key of the returned object is bearer
+    public String getTwitterStream(Authenticated auth, String screenName) {
             if (auth != null && auth.token_type.equals("bearer")) {
 
-                // Step 3: Authenticate API requests with bearer token
                 HttpGet httpGet = new HttpGet(TwitterStreamURL + screenName);
 
-                // construct a normal HTTPS request and include an Authorization
-                // header with the value of Bearer <>
                 httpGet.setHeader("Authorization", "Bearer " + auth.access_token);
                 httpGet.setHeader("Content-Type", "application/json");
                 // update the results with the body of the response
-                results = getResponseBody(httpGet);
+                String results = getResponseBody(httpGet);
+                return results;
             }
-        } catch (UnsupportedEncodingException ex) {
-        } catch (IllegalStateException ex1) {
-        }
-        return results;
+        return null;
     }
 }

@@ -25,6 +25,8 @@ public class TwitterSearch extends Activity {
     private ListView tweets;
     private EditText searchText;
     private Button searchTweetsButton;
+    private HTTPUtils httpUtil;
+    private Authenticated authenticated;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +40,10 @@ public class TwitterSearch extends Activity {
         tweets.setAdapter(new ArrayAdapter<String>(getBaseContext(),
                 android.R.layout.simple_list_item_1, new String[]{}));
         configureListeners();
+
+        httpUtil = new HTTPUtils();
+        new TwitterAuthTask().execute();
+
     }
 
     private void configureListeners() {
@@ -48,6 +54,15 @@ public class TwitterSearch extends Activity {
                 new TwitterTask().execute(filtro);
             }
         });
+    }
+
+    private class TwitterAuthTask extends AsyncTask<Void, Void, Authenticated>{
+
+        @Override
+        protected Authenticated doInBackground(Void... params) {
+            authenticated = httpUtil.authenticateApp();
+            return null;
+        }
     }
 
     private class TwitterTask extends AsyncTask<String, Void, String[]>{
@@ -71,7 +86,7 @@ public class TwitterSearch extends Activity {
                     return null;
                 }
 
-                String conteudo = new HTTPUtils().getTwitterStream(filtro);
+                String conteudo = new HTTPUtils().getTwitterStream(authenticated ,filtro);
 
                 JSONObject jsonObject = new JSONObject(conteudo);
                 Log.i("", "resultado: " + jsonObject);
