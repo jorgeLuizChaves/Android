@@ -3,12 +3,26 @@
     package="twittersearch.casadocodigo.com.br.twittersearch" >
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission
+        android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission
+        android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
 
+        <receiver android:name=".StartupReceiver" >
+            <intent-filter>
+                <action
+                    android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+        <service android:name=".NotificacaoService" />
+        <activity android:name=".TweetActivity" />
         <activity
             android:name=".TwitterSearch"
             android:label="@string/app_name" >
