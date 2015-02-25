@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.IBinder;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -39,8 +40,7 @@ public class NotificacaoService extends Service {
 
     private class NotificacaoTask implements Runnable {
 
-        private String refreshUrl = "?q=<seu_usuario_no_twitter>";
-        private String baseUrl = "http://search.twitter.com/search.json";
+        private String baseUrl = "https://api.twitter.com/1.1/search/tweets.json";
 
         @Override
         public void run() {
@@ -50,17 +50,19 @@ public class NotificacaoService extends Service {
             try {
                 HTTPUtils httpUtils = new HTTPUtils();
                 Authenticated authenticated = httpUtils.authenticateApp();
-                String json = httpUtils.getTwitterStream(authenticated, "Dilma");
+
+                String json = httpUtils.getTwitterStream(authenticated, "android");
                 JSONObject jsonObject = new JSONObject(json);
-                refreshUrl = jsonObject.getString("refresh_url");
-                JSONArray resultados = jsonObject.getJSONArray("results");
+
+                JSONArray resultados = jsonObject.getJSONArray("statuses");
                 for (int i = 0; i < resultados.length(); i++) {
                     JSONObject tweet = resultados.getJSONObject(i);
                     String texto = tweet.getString("text");
-                    String usuario = tweet.getString("from_user");
+                    String usuario = tweet.getJSONObject("user").getString("screen_name");
                     criarNotificacao(usuario, texto, i);
                 }
             } catch (Exception e) {
+                e.printStackTrace();
             }
         }
 
